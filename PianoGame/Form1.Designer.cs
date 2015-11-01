@@ -28,29 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.skinButton1 = new CCWin.SkinControl.SkinButton();
             this.SuspendLayout();
-            // 
-            // skinButton1
-            // 
-            this.skinButton1.BackColor = System.Drawing.Color.Transparent;
-            this.skinButton1.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.skinButton1.DownBack = null;
-            this.skinButton1.Location = new System.Drawing.Point(539, 350);
-            this.skinButton1.MouseBack = null;
-            this.skinButton1.Name = "skinButton1";
-            this.skinButton1.NormlBack = null;
-            this.skinButton1.Size = new System.Drawing.Size(75, 23);
-            this.skinButton1.TabIndex = 0;
-            this.skinButton1.Text = "skinButton1";
-            this.skinButton1.UseVisualStyleBackColor = false;
+  
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1041, 472);
-            this.Controls.Add(this.skinButton1);
+
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -59,7 +45,6 @@
 
         #endregion
 
-        private CCWin.SkinControl.SkinButton skinButton1;
     }
 }
 
