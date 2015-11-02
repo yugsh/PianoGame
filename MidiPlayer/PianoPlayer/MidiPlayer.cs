@@ -10,13 +10,6 @@ namespace Midi
     public  class MidiPlayer
     {
 
-        public enum MidiMode
-        {
-            MODE_GAME,
-            MODE_APPRECIATE,
-            MODE_LEARNING
-        }
-
         private OutputDevice outDevice;
         private MidiProcesser processer;
 

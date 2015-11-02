@@ -43,14 +43,24 @@ namespace PianoTest
 
             foreach (OutputDevice device in devices)
             {
-                Console.WriteLine("  OutputDevices Name:", device.Name);
+                Console.WriteLine("  OutputDevices Name:"+ device.Name);
             }
 
             MidiFile midiFile = new MidiFile("E:/173940.mid");
             MidiOptions options = new MidiOptions(midiFile);
 
             MidiPlayer player = new MidiPlayer(midiFile, options);
-            player.OutDevice = devices[0];
+            foreach (OutputDevice device in devices)
+            {
+                if (device.IsMidiPort)
+                {
+                    player.OutDevice = device;
+                }
+            }
+            if (player.OutDevice == null)
+            {
+                player.OutDevice = devices[0];
+            }
             player.Start();
         }
 
@@ -70,7 +80,11 @@ namespace PianoTest
                 return;
             }
 
-            OutputDevice outDevice = outDevices[0];
+            OutputDevice outDevice = outDevices[1];
+            if (outDevice != null && !outDevice.IsOpen)
+            {
+                outDevice.Open();
+            }
 
 
             foreach (InputDevice device in devices)
@@ -78,25 +92,30 @@ namespace PianoTest
                 if (!device.IsOpen)
                 {
                     device.Open();
+                    device.StartReceiving(new Clock(10));
                 }
 
                 device.NoteOn += delegate(NoteOnMessage msg)
                 {
+                    Console.WriteLine("NoteOnMessage => Pitch :"+msg.Pitch+"clock:"+msg.Time);
                     outDevice.SendNoteOn(msg.Channel, msg.Pitch, msg.Velocity);
                 };
 
                 device.NoteOff += delegate(NoteOffMessage msg)
                 {
+                    Console.WriteLine("NoteOffMessage => Pitch :" + msg.Pitch);
                     outDevice.SendNoteOff(msg.Channel, msg.Pitch, msg.Velocity);
                 };
 
                 device.ProgramChange += delegate(ProgramChangeMessage msg)
                 {
+                    Console.WriteLine("ProgramChangeMessage => Ins :" + msg.Instrument);
                     outDevice.SendProgramChange(msg.Channel, msg.Instrument);
                 };
 
                 device.PitchBend += delegate(PitchBendMessage msg)
                 {
+                    Console.WriteLine("PitchBendMessage => Pitch :" + msg.Value);
                     outDevice.SendPitchBend(msg.Channel, msg.Value);
                 };
             }

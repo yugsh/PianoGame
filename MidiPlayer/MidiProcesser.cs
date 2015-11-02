@@ -30,6 +30,9 @@ namespace Midi
         public event Action<Channel, Instrument> ProgramChange;
         public event Action<Channel, MidiControl, int> ControlChange;
 
+        private bool openMetronome;
+
+
         public MessageDispatcher Dispatcher
         {
             get 
@@ -87,6 +90,12 @@ namespace Midi
                     }
                 }
             }
+        }
+
+        public bool OpenMetronome
+        {
+            get { return openMetronome; }
+            set { openMetronome = value; }
         }
 
         public MidiEvent CurrentEvent
@@ -155,6 +164,11 @@ namespace Midi
             clock.Metronome += delegate(object sender, EventArgs e)
             {
                 Console.WriteLine("Metronome ... tick:"+clock.Ticks);
+
+                if (openMetronome)
+                {
+                    PlayMetronome();
+                }
             };
         }
 
@@ -246,6 +260,10 @@ namespace Midi
             clock.Stop();
         }
 
+        private void PlayMetronome()
+        {
+
+        }
 
         public void Dispose()
         {

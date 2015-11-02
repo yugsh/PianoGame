@@ -87,6 +87,14 @@ namespace Midi
             }
         }
 
+        public bool IsMidiPort
+        {
+            get
+            {
+                return caps.wTechnology == Win32API.MidiDeviceType.MOD_MIDIPORT;
+            }
+        }
+
         /// <summary>
         /// Opens this output device.
         /// </summary>

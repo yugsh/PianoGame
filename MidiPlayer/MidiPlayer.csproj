@@ -48,12 +48,12 @@
     <Compile Include="MidiFileReader.cs" />
     <Compile Include="MidiNote.cs" />
     <Compile Include="MidiOptions.cs" />
-    <Compile Include="Score\LearningPlayer.cs" />
-    <Compile Include="Score\MidiPlayer.cs" />
+    <Compile Include="PianoPlayer\LearningPlayer.cs" />
+    <Compile Include="PianoPlayer\MidiPlayer.cs" />
     <Compile Include="MidiProcesser.cs" />
     <Compile Include="MidiTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Score\GamePlayer.cs" />
+    <Compile Include="PianoPlayer\GamePlayer.cs" />
     <Compile Include="TimeSignature.cs" />
   </ItemGroup>
   <ItemGroup>

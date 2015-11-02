@@ -65,7 +65,7 @@ public class SheetMusic : Control {
     private List<Staff> staffs; /** The array of staffs to display (from top to bottom) */
     private KeySignature mainkey; /** The main key signature */
     private int    numtracks;     /** The number of tracks */
-    private float  zoom;          /** The zoom level to draw at (1.0 == 100%) */
+    private float  zoom = 1.0f;          /** The zoom level to draw at (1.0 == 100%) */
     private bool   scrollVert;    /** Whether to scroll vertically or horizontally */
     private string filename;      /** The name of the midi file */
     private int showNoteLetters;    /** Display the note letters */
@@ -83,25 +83,25 @@ public class SheetMusic : Control {
     /** Create a new SheetMusic control, using the given parsed MidiFile.
      *  The options can be null.
      */
-    public SheetMusic(MidiFile file, MidiOptions options) {
-        init(file, options); 
+    public SheetMusic() {
+        //init(file, options); 
     }
 
     /** Create a new SheetMusic control, using the given midi filename.
      *  The options can be null.
      */
-    public SheetMusic(string filename, MidiOptions options) {
-        MidiFile file = new MidiFile(filename);
-        init(file, options); 
-    }
+    //public SheetMusic(string filename, MidiOptions options) {
+       // MidiFile file = new MidiFile(filename);
+       // init(file, options); 
+    //}
 
     /** Create a new SheetMusic control, using the given raw midi byte[] data.
      *  The options can be null.
      */
-    public SheetMusic(byte[] data, string title, MidiOptions options) {
-        MidiFile file = new MidiFile(data, title);
-        init(file, options); 
-    }
+    //public SheetMusic(byte[] data, string title, MidiOptions options) {
+    //    MidiFile file = new MidiFile(data, title);
+   //     init(file, options); 
+   // }
 
 
     /** Create a new SheetMusic control.
@@ -114,7 +114,7 @@ public class SheetMusic : Control {
      * - Vertically align the music symbols in all the tracks
      * - Partition the music notes into horizontal staffs
      */
-    public void init(MidiFile file, MidiOptions options) {
+    public void Load(MidiFile file, MidiOptions options) {
         if (options == null) {
             options = new MidiOptions(file);
         }
@@ -183,6 +183,8 @@ public class SheetMusic : Control {
         BackColor = Color.White;
 
         SetZoom(1.0f);
+        this.Parent.Invalidate();
+        Invalidate();
     }
 
 
@@ -894,17 +896,19 @@ public class SheetMusic : Control {
         /* g.PageScale = zoom; */
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
         int ypos = 0;
-        foreach (Staff staff in staffs) {
-            if ((ypos + staff.Height < clip.Y) || (ypos > clip.Y + clip.Height))  {
-                /* Staff is not in the clip, don't need to draw it */
-            }
-            else {
-                g.TranslateTransform(0, ypos);
-                staff.Draw(g, clip, pen);
-                g.TranslateTransform(0, -ypos);
-            }
+        if (staffs != null) { 
+            foreach (Staff staff in staffs) {
+                if ((ypos + staff.Height < clip.Y) || (ypos > clip.Y + clip.Height))  {
 
-            ypos += staff.Height;
+                }
+                else {
+                    g.TranslateTransform(0, ypos);
+                    staff.Draw(g, clip, pen);
+                    g.TranslateTransform(0, -ypos);
+                }
+
+                ypos += staff.Height;
+            }
         }
         g.ScaleTransform(1.0f/zoom, 1.0f/zoom);
     }

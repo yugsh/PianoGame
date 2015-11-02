@@ -28,13 +28,13 @@ public class ExampleSheetMusicDLL {
             Console.WriteLine("Usage: ExampleSheetMusicDLL filename.mid");
             return;
         }
-        string filename = argv[0];
+       /* string filename = argv[0];
         Form form = new Form();
         SheetMusic sheet = new SheetMusic(filename, null);
         sheet.Parent = form;
         form.Size = new Size(600, 400);
         form.AutoScroll = true;
-        Application.Run(form);
+        Application.Run(form);*/
     }
 }
 

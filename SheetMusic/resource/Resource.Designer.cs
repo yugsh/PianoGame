@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MidiSheetMusic {
+namespace MidiSheetMusic
+{
     using System;
     
     
@@ -22,7 +23,7 @@ namespace MidiSheetMusic {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +37,7 @@ namespace MidiSheetMusic {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SheetMusic.resource.Resource", typeof(Resource).Assembly);
@@ -51,7 +52,7 @@ namespace MidiSheetMusic {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +64,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap bass {
+        public static System.Drawing.Bitmap bass {
             get {
                 object obj = ResourceManager.GetObject("bass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +74,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap eight {
+        public static System.Drawing.Bitmap eight {
             get {
                 object obj = ResourceManager.GetObject("eight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +84,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap fastforward {
+        public static System.Drawing.Bitmap fastforward {
             get {
                 object obj = ResourceManager.GetObject("fastforward", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +94,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap four {
+        public static System.Drawing.Bitmap four {
             get {
                 object obj = ResourceManager.GetObject("four", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +104,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap gray_background {
+        public static System.Drawing.Bitmap gray_background {
             get {
                 object obj = ResourceManager.GetObject("gray_background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +114,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap nine {
+        public static System.Drawing.Bitmap nine {
             get {
                 object obj = ResourceManager.GetObject("nine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +124,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap NotePair {
+        public static System.Drawing.Bitmap NotePair {
             get {
                 object obj = ResourceManager.GetObject("NotePair", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +134,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找类似于 (Icon) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Icon NotePairIcon {
+        public static System.Drawing.Icon NotePairIcon {
             get {
                 object obj = ResourceManager.GetObject("NotePairIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -143,7 +144,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap pause {
+        public static System.Drawing.Bitmap pause {
             get {
                 object obj = ResourceManager.GetObject("pause", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +154,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap play {
+        public static System.Drawing.Bitmap play {
             get {
                 object obj = ResourceManager.GetObject("play", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +164,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap rewind {
+        public static System.Drawing.Bitmap rewind {
             get {
                 object obj = ResourceManager.GetObject("rewind", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +174,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap six {
+        public static System.Drawing.Bitmap six {
             get {
                 object obj = ResourceManager.GetObject("six", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,7 +184,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap SmallNotePair {
+        public static System.Drawing.Bitmap SmallNotePair {
             get {
                 object obj = ResourceManager.GetObject("SmallNotePair", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -193,7 +194,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap stop {
+        public static System.Drawing.Bitmap stop {
             get {
                 object obj = ResourceManager.GetObject("stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -203,7 +204,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap three {
+        public static System.Drawing.Bitmap three {
             get {
                 object obj = ResourceManager.GetObject("three", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +214,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap treble {
+        public static System.Drawing.Bitmap treble {
             get {
                 object obj = ResourceManager.GetObject("treble", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,7 +224,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap twelve {
+        public static System.Drawing.Bitmap twelve {
             get {
                 object obj = ResourceManager.GetObject("twelve", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -233,7 +234,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap two {
+        public static System.Drawing.Bitmap two {
             get {
                 object obj = ResourceManager.GetObject("two", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -243,7 +244,7 @@ namespace MidiSheetMusic {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap volume {
+        public static System.Drawing.Bitmap volume {
             get {
                 object obj = ResourceManager.GetObject("volume", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
