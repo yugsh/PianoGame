@@ -51,15 +51,15 @@ public class SheetMusic : Control {
      * The values depend on whether the menu 'Large Notes' or 'Small Notes' is selected.
      */
     public const  int LineWidth = 1;    /** The width of a line */
-    public const  int LeftMargin = 4;   /** The left margin */
+    public const  int LeftMargin = 25;   /** The left margin */
     public const  int TitleHeight = 14; /** The height for the title on the first page */
     public static int LineSpace;        /** The space between lines in the staff */
     public static int StaffHeight;      /** The height between the 5 horizontal lines of the staff */
     public static int NoteHeight;      /** The height of a whole note */
     public static int NoteWidth;       /** The width of a whole note */
 
-    public const int PageWidth = 800;    /** The width of each page */
-    public const int PageHeight = 1050;  /** The height of each page (when printing) */
+    public const int PageWidth = 1280;    /** The width of each page */
+    public const int PageHeight = 1920;  /** The height of each page (when printing) */
     public static Font LetterFont;       /** The font for drawing the letters */
 
     private List<Staff> staffs; /** The array of staffs to display (from top to bottom) */
@@ -74,6 +74,11 @@ public class SheetMusic : Control {
     private SolidBrush shade2Brush; /** The brush for shading left-hand piano */
     private Pen pen;                /** The black pen for drawing */
 
+    private List<BraceSymbol> braces; 
+
+    //Ë«»º³å£¬·ÀÖ¹ÆÁÄ»ÉÁË¸
+    Bitmap doubleBufferedBitmap;
+    Graphics doubleBufferedGraphics;
 
     /** Initialize the default note sizes.  */
     static SheetMusic() {
@@ -180,11 +185,15 @@ public class SheetMusic : Control {
             staff.CalculateHeight();
         }
 
+        braces = CreateBraceSymbols(staffs);
+
         BackColor = Color.White;
 
-        SetZoom(1.0f);
-        this.Parent.Invalidate();
-        Invalidate();
+        SetStyle(ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.AllPaintingInWmPaint, true); // ½ûÖ¹²Á³ý±³¾°.
+        SetStyle(ControlStyles.DoubleBuffer, true);
+
+
     }
 
 
@@ -703,6 +712,35 @@ public class SheetMusic : Control {
     }
 
 
+    private List<BraceSymbol> CreateBraceSymbols(List<Staff> staffs)
+    {
+        List<BraceSymbol> symbols = new List<BraceSymbol>();
+        int ypos = 0;
+        BraceSymbol symbol = null;
+        foreach (Staff staff in staffs)
+        {
+            if (staff.Track == 0)
+            {
+                symbol = new BraceSymbol();
+                symbol.Height += staff.Height;
+                symbol.Top = ypos;
+                symbol.YTop = staff.YTop;
+                symbols.Add(symbol);
+            }
+            else if (staff.Track == 1)
+            {
+                if (symbol != null)
+                {
+                    symbol.Height += staff.Height;
+                    symbol.YBottom = staff.YBottom;
+                }
+            }
+            ypos += staff.Height;
+        }
+
+        return symbols;
+    }
+
     /** Given all the MusicSymbols for every track, create the staffs
      * for the sheet music.  There are two parts to this:
      *
@@ -808,6 +846,8 @@ public class SheetMusic : Control {
         }
         Width = (int)(width + 2);
         Height = ((int)height) + LeftMargin;
+        doubleBufferedBitmap = new Bitmap(Width, Height);
+        doubleBufferedGraphics = Graphics.FromImage(doubleBufferedBitmap);
         this.Invalidate();
     }
 
@@ -868,9 +908,9 @@ public class SheetMusic : Control {
      */
     public static void SetNoteSize(bool largenotes) {
         if (largenotes)
-            LineSpace = 7;
+            LineSpace = 10;
         else
-            LineSpace = 5;
+            LineSpace = 8;
 
         StaffHeight = LineSpace*4 + LineWidth*5;
         NoteHeight = LineSpace + LineWidth;
@@ -892,25 +932,47 @@ public class SheetMusic : Control {
                         (int) (e.ClipRectangle.Height / zoom));
 
         Graphics g = e.Graphics;
-        g.ScaleTransform(zoom, zoom);
-        /* g.PageScale = zoom; */
-        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        int ypos = 0;
-        if (staffs != null) { 
-            foreach (Staff staff in staffs) {
-                if ((ypos + staff.Height < clip.Y) || (ypos > clip.Y + clip.Height))  {
+        if (doubleBufferedGraphics != null)
+        {
+            doubleBufferedGraphics.Clear(Color.White);
+            doubleBufferedGraphics.ScaleTransform(zoom, zoom);
+            /* g.PageScale = zoom; */
+            doubleBufferedGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            int ypos = 0;
+            if (staffs != null) { 
+                foreach (Staff staff in staffs) {
+                    if ((ypos + staff.Height < clip.Y) || (ypos > clip.Y + clip.Height))  {
 
+                    }
+                    else {
+                        doubleBufferedGraphics.TranslateTransform(0, ypos);
+                        staff.Draw(doubleBufferedGraphics, clip, pen);
+                        doubleBufferedGraphics.TranslateTransform(0, -ypos);
+                    }
+                    ypos += staff.Height;
                 }
-                else {
-                    g.TranslateTransform(0, ypos);
-                    staff.Draw(g, clip, pen);
-                    g.TranslateTransform(0, -ypos);
-                }
-
-                ypos += staff.Height;
             }
+
+            if (braces != null)
+            {
+                foreach (BraceSymbol brace in braces)
+                {
+                    if ((brace.Top + brace.Height < clip.Y) || (brace.Top > clip.Y + clip.Height))
+                    {
+
+                    }
+                    else
+                    {
+                        doubleBufferedGraphics.TranslateTransform(0, brace.Top);
+                        brace.Draw(doubleBufferedGraphics, pen);
+                        doubleBufferedGraphics.TranslateTransform(0, -brace.Top);
+                    }
+                }
+            }
+
+            doubleBufferedGraphics.ScaleTransform(1.0f / zoom, 1.0f / zoom);
+            g.DrawImage(doubleBufferedBitmap, 0, 0);
         }
-        g.ScaleTransform(1.0f/zoom, 1.0f/zoom);
     }
 
     /** Write the MIDI filename at the top of the page */

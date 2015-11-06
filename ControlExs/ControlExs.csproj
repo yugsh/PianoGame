@@ -134,7 +134,6 @@
     <EmbeddedResource Include="ControlExs\FormEx\Res\SystemButtons\restore_normal.png" />
     <EmbeddedResource Include="ControlExs\FormEx\Res\SystemButtons\restore_down.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="ControlExs\QQControls\QQButton\Image\qqbtn_down.png" />
     <EmbeddedResource Include="ControlExs\QQControls\QQButton\Image\qqbtn_focus.png" />

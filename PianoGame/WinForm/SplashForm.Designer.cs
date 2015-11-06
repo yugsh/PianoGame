@@ -39,8 +39,12 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Location = new System.Drawing.Point(0, 0);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SplashForm";
-            this.Text = "欢迎进入罗兰钢琴教学软件";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Load += new System.EventHandler(this.SplashForm_Load);
             this.ResumeLayout(false);
 

@@ -31,13 +31,32 @@ namespace PianoGame
             SplashForm sf = new SplashForm();
             sf.ShowDialog();
 
-            this.panel1.BackColor = Color.Transparent;
+            this.panel1.AutoScroll = true;
+            this.panel1.HorizontalScroll.Enabled = true;
+            this.panel1.VerticalScroll.Enabled = true;
 
-            MidiFile midiFile = new MidiFile(Properties.Resources._173940, "173940");
+            MidiFile midiFile = new MidiFile("E:/Mozart__Rondo_Alla_Turca.mid");
             MidiOptions options = new MidiOptions(midiFile);
             sheetMusic1.Load(midiFile, options);
+            float zoom = (float)sheetMusic1.Width / SheetMusic.PageWidth;
+            sheetMusic1.SetZoom(zoom);
 
             this.Opacity = 1;
+        }
+
+        private void Forward_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Play_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Backward_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

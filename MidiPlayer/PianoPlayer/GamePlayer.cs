@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Midi
 {
-    class GamePlayer
+    public class GamePlayer
     {
         //计分规则
 
         public enum State
         {
-            MISSING = -1,
+            MISSING = 0,
             NORMAL = 1,
             GOOD = 2,
             PERFECT =3
@@ -21,7 +21,7 @@ namespace Midi
         private InputDevice inputDevice;
         private MidiProcesser processer;
 
-        public event Action<State, int,MidiEvent> PlayEvent;
+        public event Action<State, int,MidiEvent[]> PlayEvent;
 
 
         private int score;
@@ -55,10 +55,12 @@ namespace Midi
 
         public void StartPlayer()
         {
-            if (inputDevice.IsOpen)
+            if (!inputDevice.IsOpen)
             {
                 inputDevice.Open();
             }
+
+            processer.Continue();
         }
 
         /// <summary>
@@ -69,40 +71,46 @@ namespace Midi
         /// <param name="tick"></param>
         private void ComputeScore(Pitch pitch,int tick){
 
-            MidiEvent current = processer.CurrentEvent;
-            if (current != null && current.EventFlag == MidiFile.EventNoteOn)
+            bool isRight = false;
+            State state = State.MISSING;
+            MidiEvent[] current = processer.CurrentMidiEvent;
+
+            Console.WriteLine("current.size:" + current.Length);
+            foreach (MidiEvent ev in current)
             {
-                Pitch currentPitch = (Pitch)current.Notenumber;
-                int currentStart = current.StartTime;
-                int currentEnd = currentStart + current.DeltaTime;
+                Pitch currentPitch = (Pitch)ev.Notenumber;
+                if (currentPitch == pitch)
+                {
+                    isRight = true;
 
-                State state = State.MISSING;
-
-                if (currentPitch != pitch)
-                {
-                    state = State.MISSING;
+                    int currentStart = ev.StartTime;
+                    int currentEnd = currentStart + ev.DeltaTime;
+                    if (currentEnd - tick < ev.DeltaTime / 4)
+                    {
+                        state = State.PERFECT;
+                    }
+                    else if (currentEnd - tick < ev.DeltaTime / 2)
+                    {
+                        state = State.GOOD;
+                    }
+                    else
+                    {
+                        state = State.NORMAL;
+                    }
                 }
-                else if (currentEnd - tick < current.DeltaTime/4)
-                {
-                    state = State.PERFECT;
-                }
-                else if (currentEnd - tick < current.DeltaTime /2)
-                {
-                    state = State.GOOD;
-                }
-                else
-                {
-                    state = State.NORMAL;
-                }
-
-                score += Convert.ToInt32(state);
-                OnPlaying(state, score, current);
             }
+
+            if (!isRight)
+            {
+                state = State.MISSING;
+            }
+            score += Convert.ToInt32(state);
+            OnPlaying(state, score, current);
         }
 
-        protected virtual void OnPlaying(State state,int score, MidiEvent ev)
+        protected virtual void OnPlaying(State state,int score, MidiEvent[] ev)
         {
-            Action<State, int, MidiEvent> handler = PlayEvent;
+            Action<State, int, MidiEvent[]> handler = PlayEvent;
 
             if (handler != null)
             {

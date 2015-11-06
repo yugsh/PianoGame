@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Midi
 {
-    class LearningPlayer
+    public class LearningPlayer
     {
         private InputDevice inputDevice;
         private MidiProcesser processer;
@@ -32,10 +32,11 @@ namespace Midi
 
         public void StartPlayer()
         {
-            if (inputDevice.IsOpen)
+            if (!inputDevice.IsOpen)
             {
                 inputDevice.Open();
             }
+            processer.Continue();
         }
 
 
@@ -46,14 +47,15 @@ namespace Midi
         /// <param name="pitch"></param>
         private void ProcessPitch(Pitch pitch)
         {
+            Console.WriteLine("pitch:" + pitch + " waitPitch:" + waitPitch);
             if (pitch == waitPitch)
             {
                 processer.Continue();
-                OnLearing(true, processer.CurrentEvent);
+                OnLearing(true, null);
             }
             else
             {
-                OnLearing(false, processer.CurrentEvent);
+                OnLearing(false, null);
             }
         }
 

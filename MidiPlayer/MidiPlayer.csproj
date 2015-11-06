@@ -50,7 +50,7 @@
     <Compile Include="MidiOptions.cs" />
     <Compile Include="PianoPlayer\LearningPlayer.cs" />
     <Compile Include="PianoPlayer\MidiPlayer.cs" />
-    <Compile Include="MidiProcesser.cs" />
+    <Compile Include="PianoPlayer\MidiProcesser.cs" />
     <Compile Include="MidiTrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PianoPlayer\GamePlayer.cs" />

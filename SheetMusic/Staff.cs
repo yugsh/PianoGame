@@ -42,6 +42,7 @@ public class Staff {
     private List<MusicSymbol> symbols;  /** The music symbols in this staff */
     private List<LyricSymbol> lyrics;   /** The lyrics to display (can be null) */
     private int ytop;                   /** The y pixel of the top of the staff */
+    private int ybottom;
     private ClefSymbol clefsym;         /** The left-side Clef symbol */
     private AccidSymbol[] keys;         /** The key signature symbols */
     private bool showMeasures;          /** If true, show the measure numbers */
@@ -53,6 +54,7 @@ public class Staff {
     private int starttime;              /** The time (in pulses) of first symbol */
     private int endtime;                /** The time (in pulses) of last symbol */
     private int measureLength;          /** The time (in pulses) of a measure */
+    private Bitmap bitmapBrace;
 
     /** Create a new staff with the given list of music symbols,
      * and the given key signature.  The clef is determined by
@@ -61,6 +63,22 @@ public class Staff {
      * with the staffs above and below. The SheetMusicOptions are used
      * to check whether to display measure numbers or not.
      */
+
+    public int YTop{
+        get
+        {
+            return ytop;
+        }
+    }
+
+    public int YBottom
+    {
+        get
+        {
+            return ybottom;
+        }
+    }
+
     public Staff(List<MusicSymbol> symbols, KeySignature key, 
                  MidiOptions options,
                  int tracknum, int totaltracks)  {
@@ -71,6 +89,7 @@ public class Staff {
         showMeasures = (options.showMeasures && tracknum == 0);
         measureLength = options.time.Measure;
         Clef clef = FindClef(symbols);
+        bitmapBrace = Resource.Brace;
 
         clefsym = new ClefSymbol(clef, 0, false);
         keys = key.GetSymbols(clef);
@@ -142,6 +161,7 @@ public class Staff {
         below = Math.Max(below, clefsym.BelowStaff);
         ytop = above + SheetMusic.NoteHeight;
         height = SheetMusic.NoteHeight*5 + ytop + below;
+        ybottom = height - ytop - SheetMusic.NoteHeight;
         if (showMeasures || lyrics != null) {
             height += SheetMusic.NoteHeight * 3/2;
         }
@@ -314,13 +334,6 @@ public class Staff {
     private void DrawEndLines(Graphics g, Pen pen) {
         pen.Width = 1;
 
-        /* Draw the vertical lines from 0 to the height of this staff,
-         * including the space above and below the staff, with two exceptions:
-         * - If this is the first track, don't start above the staff.
-         *   Start exactly at the top of the staff (ytop - LineWidth)
-         * - If this is the last track, don't end below the staff.
-         *   End exactly at the bottom of the staff.
-         */
         int ystart, yend;
         if (tracknum == 0)
             ystart = ytop - SheetMusic.LineWidth;
@@ -338,6 +351,24 @@ public class Staff {
         g.DrawLine(pen, width-1, ystart, width-1, yend);
 
     }
+
+    /*public void DrawBrace(Graphics g, Pen pen)
+    {
+        pen.Width = 1;
+
+        int ystart, yend;
+        if (tracknum == 0)
+        {
+            ystart = ytop - SheetMusic.LineWidth;
+
+            yend = ytop + 15 * SheetMusic.NoteHeight ;
+
+            Rectangle rect =  new Rectangle(SheetMusic.LeftMargin -12, ystart,
+                        10, yend - ystart);
+            g.DrawImage(bitmapBrace,rect );
+        }
+
+    }*/
 
     /** Draw this staff. Only draw the symbols inside the clip area */
     public void Draw(Graphics g, Rectangle clip, Pen pen) {
@@ -373,6 +404,7 @@ public class Staff {
         }
         DrawHorizLines(g, pen);
         DrawEndLines(g, pen);
+        //DrawBrace(g, pen);
 
         if (showMeasures) {
             DrawMeasureNumbers(g, pen);

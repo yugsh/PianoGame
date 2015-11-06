@@ -28,6 +28,14 @@ namespace PianoTest
             {
                 program.OutDeviceTest();
             }
+            else if (s == 3)
+            {
+                program.TestScore();
+            }
+            else if (s == 4)
+            {
+                program.TestLearning();
+            }
             Console.ReadLine();
         }
 
@@ -46,7 +54,7 @@ namespace PianoTest
                 Console.WriteLine("  OutputDevices Name:"+ device.Name);
             }
 
-            MidiFile midiFile = new MidiFile("E:/173940.mid");
+            MidiFile midiFile = new MidiFile("E:/13.mid");
             MidiOptions options = new MidiOptions(midiFile);
 
             MidiPlayer player = new MidiPlayer(midiFile, options);
@@ -121,6 +129,137 @@ namespace PianoTest
             }
         }
 
+        public void TestScore()
+        {
 
+
+            MidiFile midiFile = new MidiFile("E:/14.mid");
+            MidiOptions options = new MidiOptions(midiFile);
+            
+            ReadOnlyCollection<InputDevice> devices = InputDevice.InstalledDevices;
+            if (devices.Count == 0)
+            {
+                Console.WriteLine("No  input devices");
+                return;
+            }
+
+            ReadOnlyCollection<OutputDevice> outDevices = OutputDevice.InstalledDevices;
+            if (outDevices.Count == 0)
+            {
+                Console.WriteLine("No out put devices");
+                return;
+            }
+
+            OutputDevice outDevice = outDevices[1];
+            if (outDevice != null && !outDevice.IsOpen)
+            {
+                outDevice.Open();
+            }
+
+
+            foreach (InputDevice device in devices)
+            {
+                if (!device.IsOpen)
+                {
+                    device.Open();
+                    device.StartReceiving(new Clock(10));
+                }
+
+                device.NoteOn += delegate(NoteOnMessage msg)
+                {
+                    Console.WriteLine("NoteOnMessage => Pitch :"+msg.Pitch+"clock:"+msg.Time);
+                };
+
+                device.NoteOff += delegate(NoteOffMessage msg)
+                {
+                    Console.WriteLine("NoteOffMessage => Pitch :" + msg.Pitch);
+                };
+
+                device.ProgramChange += delegate(ProgramChangeMessage msg)
+                {
+                    Console.WriteLine("ProgramChangeMessage => Ins :" + msg.Instrument);
+                };
+
+                device.PitchBend += delegate(PitchBendMessage msg)
+                {
+                    Console.WriteLine("PitchBendMessage => Pitch :" + msg.Value);
+                };
+
+                GamePlayer player = new GamePlayer(device, midiFile, options);
+                player.StartPlayer();
+                player.PlayEvent += delegate(GamePlayer.State state, int score, MidiEvent[] events)
+                {
+                    Console.WriteLine("state:" + state + " score:" + score);
+                };
+            }
+
+        }
+
+
+        public void TestLearning()
+        {
+
+
+            MidiFile midiFile = new MidiFile("E:/14.mid");
+            MidiOptions options = new MidiOptions(midiFile);
+
+            ReadOnlyCollection<InputDevice> devices = InputDevice.InstalledDevices;
+            if (devices.Count == 0)
+            {
+                Console.WriteLine("No  input devices");
+                return;
+            }
+
+            ReadOnlyCollection<OutputDevice> outDevices = OutputDevice.InstalledDevices;
+            if (outDevices.Count == 0)
+            {
+                Console.WriteLine("No out put devices");
+                return;
+            }
+
+            OutputDevice outDevice = outDevices[1];
+            if (outDevice != null && !outDevice.IsOpen)
+            {
+                outDevice.Open();
+            }
+
+
+            foreach (InputDevice device in devices)
+            {
+                if (!device.IsOpen)
+                {
+                    device.Open();
+                    device.StartReceiving(new Clock(10));
+                }
+
+                device.NoteOn += delegate(NoteOnMessage msg)
+                {
+                    Console.WriteLine("NoteOnMessage => Pitch :" + msg.Pitch + "clock:" + msg.Time);
+                };
+
+                device.NoteOff += delegate(NoteOffMessage msg)
+                {
+                    Console.WriteLine("NoteOffMessage => Pitch :" + msg.Pitch);
+                };
+
+                device.ProgramChange += delegate(ProgramChangeMessage msg)
+                {
+                    Console.WriteLine("ProgramChangeMessage => Ins :" + msg.Instrument);
+                };
+
+                device.PitchBend += delegate(PitchBendMessage msg)
+                {
+                    Console.WriteLine("PitchBendMessage => Pitch :" + msg.Value);
+                };
+
+                LearningPlayer player = new LearningPlayer(device, midiFile, options);
+                player.StartPlayer();
+                player.LearningEvent += delegate(Boolean right, MidiEvent ev)
+                {
+                    Console.WriteLine("right:" + right);
+                };
+            }
+
+        }
     }
 }

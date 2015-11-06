@@ -49,6 +49,7 @@
     <Compile Include="AccidSymbol.cs" />
     <Compile Include="BarSymbol.cs" />
     <Compile Include="BlankSymbol.cs" />
+    <Compile Include="BraceSymbol.cs" />
     <Compile Include="ChordSymbol.cs" />
     <Compile Include="ClefMeasures.cs" />
     <Compile Include="ClefSymbol.cs" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <None Include="Resources\173940.mid" />
     <Content Include="resource\bass.png" />
+    <None Include="resource\Brace.png" />
     <Content Include="resource\eight.png" />
     <Content Include="resource\fastforward.png" />
     <Content Include="resource\four.png" />
